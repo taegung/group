@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: projectlinker-server
+  profiles:
+    active: jwt, mail
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: projectlinker
+    password: projectlinker
+    url: jdbc:mysql://localhost:3306/projectlinker?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8082
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+crawling:
+  script:
+    scroll: "window.scrollBy(0,350)"
+  url: "https://www.campuspick.com/contest?category=108"
+  target:
+    title: "a.top h2"
+    company: "p.company"
+    image: "figure[data-image]"
+  attribute:
+    image: "data-image"
+schedule:
+#  cron: 0 * * * * * # 테스트 시 1분에 한번씩 크롤링 요청을 하기 위한 크론식
+  cron: 0 0 0 * * * # 실제 사용지 매일 자정에 크롤링 요청을 하기 위한 크론식
+  activate: true
